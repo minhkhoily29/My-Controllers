@@ -1,0 +1,17 @@
+# CMake generated files
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+# Compiled files
+*.exe
+*.obj
+*.o
+*.dll
+
+# Visual Studio
+.vs/
+
+# VS Code local settings
+.vscode/
