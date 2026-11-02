@@ -3,9 +3,9 @@
 #include <SDL3/SDL.h>
 #include <memory>
 #include <vector>
+#include <string>
 
 int main() {
-    std::vector<std::shared_ptr<ControllerManager>> connectedControllers;
     //initialize the gamepad
     if (!SDL_Init(SDL_INIT_GAMEPAD)) {
         std::cerr << "SDL3 initialization failed." << SDL_GetError() << "\n";
@@ -20,16 +20,13 @@ int main() {
         SDL_Quit();
         return 1;
     }
-    for(int i = 0; i < gamepadCount; i++) {
-        SDL_JoystickID id = gamepads[i];
-        std::string name = SDL_GetGamepadNameForID(id);
-        std::string controllerId = std::to_string(id);
-        std::shared_ptr<ControllerManager> newController = std::make_shared<ControllerManager>(
-            new ControllerManager(controllerId, name));
-        connectedControllers.push_back(newController);
-    }
-    for(auto c : connectedControllers) {
-        std::cout << c->getId() << c->getName();
+    std::shared_ptr<ControllerManager> controllerManager = std::make_shared<ControllerManager>(gamepadCount, gamepads);
+    std::vector<std::shared_ptr<Controller>> controllers = controllerManager->getControllers();
+    std::cout << "Number of controllers connected: " << std::to_string(controllerManager->getControllerCount()) << "\n";
+    for(const auto &c : controllers) {
+        std::string name = c->getName();
+        std::string id = c->getId();
+        std::cout << "id: " << id << " name: " << name << "\n";
     }
     SDL_free(gamepads);
     SDL_Quit();

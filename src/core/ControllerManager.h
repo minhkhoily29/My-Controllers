@@ -1,13 +1,17 @@
 #pragma once
-#include <string>
-
+#include "Controller.h"
+#include <SDL3/SDL.h>
+#include <vector>
+#include <memory>
 class ControllerManager {
 private:
-    static int counter;
-    std::string connectionId;
-    std::string name;
+    std::vector<std::shared_ptr<Controller>> controllers;
+    int controllerCount;
 public:
-    ControllerManager(std::string id, std::string name);
-    std::string getId() const;
-    std::string getName() const;
+    ControllerManager(int count, SDL_JoystickID *gamepads);
+    int getControllerCount();
+    std::vector<std::shared_ptr<Controller>> getControllers();
+    ~ControllerManager() {
+        std::cout << "Controller Manager object destroyed" << "\n";
+    }
 };
