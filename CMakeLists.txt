@@ -26,6 +26,8 @@ FetchContent_MakeAvailable(SDL3)
 # Create our application
 add_executable(MyControllers
     src/main.cpp
+    src/core/ControllerManager.cpp
+    src/core/Controller.cpp
 )
 
 # Link SDL3 to our application
